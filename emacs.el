@@ -1,3 +1,7 @@
+;; TODO
+;; *) Problem: Cscope opens file in a totally other window. Solution: remember what window we called cscope from, and then open a new buffer inside the same window.
+
+
 ;; add local dir in front of the list
 
 ;; Added by Package.el.  This must come before configurations of
@@ -372,3 +376,16 @@
 ;; Enable the ability to undo/redo window configuration changes with C-<left>/<right>
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Convenience.html
 (setq winner-mode t)
+
+;; Always prefer vertical window splits.
+(setq split-height-threshold nil)
+
+;; Show the name of the function we're currently in in the status bar.
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Which-Function.html
+;; Disabled because semantic-stickyfunc-mode seems nicer.
+;; (setq which-function-mode t)
+
+;; *CAREFULLY* trying out CEDET with the tip of a toe
+(semantic-mode 1)
+(global-semantic-stickyfunc-mode 1)
+;; (global-ede-mode 1)
