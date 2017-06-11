@@ -229,6 +229,8 @@
 	   (message "Done processing")
 	   ;; Set compilation-directory also, so the compile function would pick up the root as well.
 	   (setq compilation-directory project-root)
+	   ;; For the compile command
+	   (setq default-directory project-root)
 	   )
 	 )
        )
@@ -247,6 +249,9 @@
    "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CSCOPE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enable cscope support
 ;; Modified cscope from the local lisp directory should take the priority
 (require 'xcscope)
@@ -254,6 +259,15 @@
 ; Not needed on linux, needed on os x... looks like some init file is missing?
 ; Also see update-file-autoloads Emacs manual and ;;;###autoload in xcscope.el.
 (cscope-setup)
+
+;; Close window after hitting "enter" in the selection buffer
+(setq cscope-close-window-after-select t)
+
+;; Display the selected code fragment in the previous window which should normally replace the old code location.
+;; The default behaviour uses `some-window` which picks a window at "random".
+(setq cscope-display-buffer-args '((display-buffer-in-previous-window)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
@@ -285,9 +299,9 @@
 ;;(setq exec-path (append exec-path '("/usr")))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Highlight shenenigans ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Highlight shenenigans 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'hi-lock) ; reusing their faces
 (defun vk-remove-overlays-in-region (beginning end) (interactive) (remove-overlays beginning end))
 (defun vk-highlight-selection (face)
@@ -308,10 +322,12 @@
 (global-set-key (kbd "s-7") (lambda () (interactive) (vk-highlight-selection 'hi-red-b)))
 (global-set-key (kbd "s-0") (lambda () (interactive) (vk-highlight-selection nil)))
 ; Prooooobably gonna break hi-lock, but oh well
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; set-goal-column (C-x C-n) sets default column for ⬆/⬇
 (put 'set-goal-column 'disabled nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Fix newlines + draw dotty file with an external program
 (defun vk-draw-flowchart ()
   (interactive)
@@ -327,7 +343,8 @@
     )
   )
 (global-set-key (kbd "<f12>") 'vk-draw-flowchart)
-				
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Auto-generated custom stuff goes at the end
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -378,7 +395,7 @@
 (setq winner-mode t)
 
 ;; Always prefer vertical window splits.
-(setq split-height-threshold nil)
+;; (setq split-height-threshold nil)
 
 ;; Show the name of the function we're currently in in the status bar.
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Which-Function.html
@@ -389,3 +406,4 @@
 (semantic-mode 1)
 (global-semantic-stickyfunc-mode 1)
 ;; (global-ede-mode 1)
+
