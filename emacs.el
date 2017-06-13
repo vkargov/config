@@ -407,3 +407,18 @@
 (global-semantic-stickyfunc-mode 1)
 ;; (global-ede-mode 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Additional bindings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Alt+↑/↓ move the cursor AND scroll the screen
+(global-set-key (kbd "M-<up>")
+		(lambda (&optional n) (interactive "^p")
+		  (or n (setq n 1))
+		  (scroll-down n)
+		  (previous-line n)))
+(global-set-key (kbd "M-<down>")
+		(lambda (&optional n) (interactive "^p")
+		  (or n (setq n 1))
+		  (scroll-up n)
+		  (next-line n)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
