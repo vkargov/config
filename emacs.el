@@ -29,22 +29,31 @@
 
 (setq-default require-final-newline nil)
 
-;; display file name in titlebar
-(add-hook 'window-configuration-change-hook
-	  (lambda ()
-	    (setq frame-title-format
+;; Disable the useless menu bar unless we're on mac where it doesn't take any space.
+(or (string= system-type "darwin") (menu-bar-mode -1))
+;; It may be broken... I need to test it on non-osx
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defadvice select-window (after gud-grief activate)
+  ;; Display file name in titlebar
+  (setq frame-title-format
           (concat "emacs ("
- 		   (replace-regexp-in-string
-		    (concat "/home/" user-login-name) "~"
-		    (or buffer-file-name "%b"))
-           ")"))))
+		  (replace-regexp-in-string
+		   (concat "/home/" user-login-name) "~"
+		   (or buffer-file-name "%b"))
+		  ")"))
+  ;; Disable the useless toolbar unless we're in gud-mode (debugger).
+  (if (string-match-p "\\b\\(gdb\\|gud\\)\\b" (symbol-name major-mode)) (tool-bar-mode 1) (tool-bar-mode -1)))
+;; I couldn't find a good hook to selectively adjust the look of each frame.
+;; I tried window-configuration-change-hook, but it's not called on some some
+;; So using the advice thing instead.
+;; PS it's still 糞
 
-;; disable the useless menu bar
-(menu-bar-mode -1)
+;; Run the configuration on the initial window
+(select-window (selected-window))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; disable the useless tool bar
-(tool-bar-mode -1)
-
+;; Follow the build text
 (setq-default compilation-scroll-output t)
 
 ;; disable warning issued by narrow-to-region
@@ -129,6 +138,7 @@
 			  ((".git") ()) ; Git
 			  ((".svn") ()) ; Subversion
 			  (("APPLE_LICENSE") ()) ; oringo
+			  (() ())
 			  ))
 
 (defun vk-index-project () (interactive)
@@ -217,6 +227,12 @@
 		 (let ((header_path (concat "/usr/include/" header)))
 		   (if (file-exists-p header_path) (add-to-list 'files header_path)))
 		 )
+
+	       ;; Add SDL libraries.
+	       ;; OSX-only, I need to make it system and path independent...
+	       (or (string= system-type "darwin")
+		   (setcdr (last files) (let ((sdl-dir "/usr/local/Cellar/sdl2/2.0.5/include/SDL2/")) (mapcar (lambda (s) (concat sdl-dir s)) (directory-files sdl-dir)))))
+
 	       files))
 
 	   (vk-dump-vars-to-file (vk-build-cscope-database project-root project-blacklist)
