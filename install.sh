@@ -20,6 +20,10 @@ install_conf () {
 install_conf emacs.el ~/.emacs
 install_conf bash.conf ~/.bash_profile
 install_conf tmux.conf ~/.tmux.conf
+
 if [[ "$(uname -s)" == Darwin ]]; then
     install_conf karabiner.conf "$HOME/Library/Application Support/Karabiner/private.xml"
+else
+    install_conf xinitrc ~/.xinitrc
+    install_conf xmodmap ~/.xmodmap
 fi
