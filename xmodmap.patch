@@ -1,0 +1,14 @@
+77a78
+>     struct timespec ts = {0, timeout};
+82c83
+< 	     "%s:  please release the following keys within %d seconds:\n",
+---
+> 	     "%s:  please smile within %d ns:\n",
+92c93
+<     sleep (timeout);
+---
+>     nanosleep (&ts, NULL);
+350c351
+<     for (retries = 5, timeout = 2; retries > 0; retries--, timeout *= 2) {
+---
+>     for (retries = 11 /*41s*/, timeout = 10; retries > 0; retries--, timeout *= 2) {
