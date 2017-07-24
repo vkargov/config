@@ -385,6 +385,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Better completion mode
 
+
 ;; Documentation: https://www.gnu.org/software/emacs/manual/html_mono/ido.html
 (require 'ido)
 ;; Don't open the buffer automatically when hitting tab.
@@ -396,7 +397,8 @@
 			    (define-key ido-file-dir-completion-map [backspace] nil)
 			    (define-key ido-file-dir-completion-map "\d" nil)
 			    ))
-(ido-mode t)
+;; ;; Okay I'm done with IDO. It needs some serious reworking to not be frustrating, and the config options don't seem lean enough for that.
+;; (ido-mode t)
 
 ;; ;; Helm
 ;; way too much computer in it...
