@@ -1,0 +1,21 @@
+# Completion coloring
+set colored-stats on
+
+# Ignore case on completion (Probably should disable on Linux...)
+set completion-ignore-case on
+
+set completion-query-items 500
+
+# This one's a bit too much I guess. If there is f.txt and f.txt~, it will spam the screen, etc.
+# The following option seems to be more conservative and just what I need.
+# set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Bind C-m to insert 0th argument and C-, to insert 1st argument, similarily to the existing C-. that binds to yank-last-arg.
+# So now if i ran "mv a b", I can then run "mv b a" by typing "M-m M-. M-,"
+# \e1 stands for M-1 which and \e\C-y stands for C-M-y which is yank-nth-arg
+# Same can be done in bashrc if you preceed it with the 'bind' command, but setting it here is more general.
+# We cannot bind a keypress to several readline functions, BUT we can bind it to a "macro", i.e. a sequence of symbols.
+# Usually it would just be a string, but in this case I'm using special characters, which in turn are translated into several readline functions.
+"\e,": "\e1\e\C-y"
+"\em": "\e0\e\C-y"
