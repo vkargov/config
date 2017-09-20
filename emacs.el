@@ -125,7 +125,7 @@
 ;; Define the core dir trappings and blacklisted directories here
 (setq vk-known-projects '((("gcc" "config" "libgcc" "libiberty") ("/testsuite/" "/test/" "/build/"))
 			  (("CODE_OWNERS.TXT" "tools" "utils" "LLVMBuild.txt") ("/test/" "/build/"))
-			  (("mono" "mcs" "eglib" "docs" "tools") ("/build.*/"))
+			  (("mono" "mcs" "docs" "tools") ("/build.*/"))
 			  (("DROD" "DRODLib" "DRODUtil") ())
 			  (("arch" "drivers" "include" "kernel") ("/drivers/")) ; Linux
 			  (("cmake" "plugins" "panel" "doc") ()) ; Unity
