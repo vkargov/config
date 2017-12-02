@@ -293,9 +293,8 @@
 ;; Empty scratch message
 (setq initial-scratch-message nil)
 
-;; Mono coding guideline things. Should be activated when pressing F9 along with 
-;; Use tabs (and configure your IDE to show a size of 8 spaces for them) for writing your code (hopefully we can keep this consistent).
-(setq-default c-basic-offset 8)
+;; 8/10 spaghetti manufacturers approve of this indentation level
+(setq-default c-basic-offset 2)
 
 ;; More convenient navigation through buffers
 ;; TODO dunno what the difference between other-window(C-x o) and next-multiframe-window is...
