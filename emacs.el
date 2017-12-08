@@ -95,9 +95,14 @@
 (global-set-key (kbd "<f5>") 'revert-buffer-no-confirm)
 ;; F7 = compile
 (global-set-key (kbd "<f7>") 'compile)
-;; ;; F8 = rebuild ctags
-;; (defun rebuild-ctags () (interactive) (shell-command "topdir && ctags -Ref \"$TOPDIR\"/TAGS \"$TOPDIR\"/gcc"))
-;; (global-set-key (kbd "<f8>") 'rebuild-ctags)
+;; C-; = "quick compile & run"
+(defun vk-get-quick-build-string ()
+  (let* ((file (shell-quote-argument (buffer-file-name)))
+	 (base (shell-quote-argument (file-name-sans-extension (buffer-file-name)))))
+    (cond ((string= (file-name-extension file) "cpp")
+	   (concat "clang++ -std=c++14 " file " -o " base " && " base))
+	  (t "echo '¯\_(ツ)_/¯'"))))
+(global-set-key (kbd "C-;") (lambda () (interactive) (compile (vk-get-quick-build-string))))
 
 ;; Don't ask if I want to reload TAGS
 (setq tags-revert-without-query 1)
