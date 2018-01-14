@@ -1,0 +1,28 @@
+# xmodmap: Please release the following keys withing 2 seconds.
+# xmodmap: Please release the following keys withing 2 seconds.
+# xmodmap: Please release the following keys withing 2 seconds.
+# me: @_@
+
+#Japanese 
+# The new ibus version does not switch from Cyrillic to Japanese for some reason, so we have to switch to English first.
+"ibus engine xkb:us::eng; ibus engine mozc-jp; xmodmap ~/.xmodmap"
+m:0x40 + c:44
+
+#English
+"ibus engine xkb:us::eng; xmodmap ~/.xmodmap"
+m:0x40 + c:45
+
+#Russian
+"ibus engine xkb:ru::rus; xmodmap ~/.xmodmap"
+m:0x40 + c:46
+
+#Ukrainian
+"ibus engine xkb:ua::ukr; xmodmap ~/.xmodmap"
+m:0x40 + c:32
+
+#French
+"ibus engine xkb:fr::fra; xmodmap ~/.xmodmap"
+m:0x40 + c:47
+
+"win=`xdotool getactivewindow` && xdotool click 1 && xdotool windowactivate $win && mplayer /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+c:107
