@@ -24,5 +24,7 @@ m:0x40 + c:32
 "ibus engine xkb:fr::fra; xmodmap ~/.xmodmap"
 m:0x40 + c:47
 
-"win=`xdotool getactivewindow` && xdotool click 1 && xdotool windowactivate $win && mplayer /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+# PrintScr issues a mouse click without losing the window focus.
+# Don't ask me why, it's complicated.
+"win=`xdotool getactivewindow` && xdotool click 1 && xdotool windowactivate $win"
 c:107
