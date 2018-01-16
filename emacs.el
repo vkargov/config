@@ -158,7 +158,7 @@
 	   (let ((buf (find-file-noselect filename)))
 	     (set-buffer buf)
 	     (erase-buffer)
-	     (loop for var in varlist do
+	     (cl-loop for var in varlist do
 		   (princ (concat var "\n") buf))
 	     (save-buffer)
 	     (kill-buffer))))
@@ -240,7 +240,7 @@
 
 	       ;; Add SDL libraries.
 	       ;; OSX-only, I need to make it system and path independent...
-	       (or (string= system-type "darwin")
+	       (and (string= system-type "darwin")
 		   (setcdr (last files) (let ((sdl-dir "/usr/local/Cellar/sdl2/2.0.5/include/SDL2/")) (mapcar (lambda (s) (concat sdl-dir s)) (directory-files sdl-dir)))))
 
 	       files))
@@ -312,7 +312,7 @@
 (global-set-key (kbd "M-[") 'previous-multiframe-window)
 
 ;; Use multi-term.el. It's a nicer term mode. Unstable from my early impressions, so not sure I can really utilize it...
-(require 'multi-term)
+;; (require 'multi-term)
 
 ;; M-n copies full file name (was undefined)
 (global-set-key (kbd "M-n") (lambda () (interactive) (kill-new (buffer-file-name))))
