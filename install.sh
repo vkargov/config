@@ -27,5 +27,5 @@ if [[ "$(uname -s)" == Darwin ]]; then
     install_conf karabiner.conf "$HOME/Library/Application Support/Karabiner/private.xml"
 else
     install_conf xinitrc ~/.xinitrc
-    install_conf xmodmap ~/.xmodmap
+    # install_conf xmodmap ~/.xmodmap
 fi
