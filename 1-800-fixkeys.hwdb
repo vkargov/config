@@ -1,0 +1,19 @@
+# Rebind the keyboard.
+# Alternatively, setkeycodes may be used to achieve the same effect.
+
+# To get keycodes, use `evtest`
+# (`showkey` doesn't work correct with USB keyboards)
+
+# Copy this file to /etc/udev/hwdb.d/1-800-fixkeys.hwdb
+# Then run `systemd-hwdb update` and reboot.
+# And don't ask any questions.
+
+evdev:atkbd:dmi:*           # This supposedly works with most USB keyboards.
+ KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
+ KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
+ KEYBOARD_KEY_1c=rightctrl  # enter := rightctrl
+ KEYBOARD_KEY_9d=enter      # rightctrl := enter
+
+# References:
+# https://wiki.archlinux.org/index.php/Map_scancodes_to_keycodes
+# https://github.com/systemd/systemd/blob/master/hwdb/60-keyboard.hwdb
