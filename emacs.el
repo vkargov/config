@@ -452,5 +452,6 @@
 ;; Dictionary-based completion.
 ;; Originally bound to M-<TAB> and unreachable in GUI for obvious reasons.
 ;; I don't think it's *that* useful, but I wanna try and see.
-(global-set-key [?\C-\t] 'ispell-complete-word)
+(global-set-key [C-tab] 'ispell-complete-word)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
