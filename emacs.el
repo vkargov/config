@@ -139,7 +139,7 @@
 			  (("DROD" "DRODLib" "DRODUtil") ())
 			  (("arch" "drivers" "include" "kernel") ("/drivers/")) ; Linux
 			  (("cmake" "plugins" "panel" "doc") ()) ; Unity
-			  (("README.md" "/src/") ("/bin/")) ; generic software project #4 (e.g. CoreCLR)
+			  (("README.md") ("/bin/")) ; generic software project #4 (e.g. CoreCLR)
 			  (("README" "binutils" "gas") ()) ; binutils
 			  (("README" "INSTALL") ("/.pc/")) ; generic software project #1
 			  (("README") ("/.pc/")) ; generic software project #2
@@ -453,5 +453,21 @@
 ;; Originally bound to M-<TAB> and unreachable in GUI for obvious reasons.
 ;; I don't think it's *that* useful, but I wanna try and see.
 (global-set-key [C-tab] 'ispell-complete-word)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Zoom functions that resize *all* frames;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun vk-zoom-in () (interactive)
+       (set-face-attribute 'default nil :height
+			   (+ (face-attribute 'default :height) 10)))
+(defun vk-zoom-out () (interactive)
+       (set-face-attribute 'default nil :height
+			   (- (face-attribute 'default :height) 10)))
+
+(global-set-key [C-mouse-4] 'vk-zoom-in)
+(global-set-key [C-mouse-5] 'vk-zoom-out)
+(global-set-key [?\C-+] 'vk-zoom-in)
+(global-set-key [?\C--] 'vk-zoom-out)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
