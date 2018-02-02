@@ -21,3 +21,8 @@ set show-all-if-unmodified on
 "\e,": "\e1\e\C-y "
 "\em": "\e0\e\C-y "
 "\e.": "\e_ "
+
+# M-C-f and M-C-b semantic-conscious version of M-f and M-b.
+# Somewhat similar to forward-sexp and backwards-sexp in Emacs.
+"\e\C-f": shell-forward-word
+"\e\C-b": shell-backward-word
