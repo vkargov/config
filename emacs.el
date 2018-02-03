@@ -46,7 +46,8 @@
 		   (or buffer-file-name "%b"))
 		  ")"))
   ;; Disable the useless toolbar unless we're in gud-mode (debugger).
-  (if (string-match-p "\\b\\(gdb\\|gud\\)\\b" (symbol-name major-mode)) (tool-bar-mode 1) (tool-bar-mode -1)))
+  (when (boundp 'tool-bar-mode)
+    (if (string-match-p "\\b\\(gdb\\|gud\\)\\b" (symbol-name major-mode)) (tool-bar-mode 1) (tool-bar-mode -1))))
 ;; I couldn't find a good hook to selectively adjust the look of each frame.
 ;; I tried window-configuration-change-hook, but it's not called on some some
 ;; So using the advice thing instead.
