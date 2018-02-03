@@ -46,7 +46,7 @@
 		   (or buffer-file-name "%b"))
 		  ")"))
   ;; Disable the useless toolbar unless we're in gud-mode (debugger).
-  (when (boundp 'tool-bar-mode)
+  (when tool-bar-mode
     (if (string-match-p "\\b\\(gdb\\|gud\\)\\b" (symbol-name major-mode)) (tool-bar-mode 1) (tool-bar-mode -1))))
 ;; I couldn't find a good hook to selectively adjust the look of each frame.
 ;; I tried window-configuration-change-hook, but it's not called on some some
@@ -281,7 +281,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enable cscope support
 ;; Modified cscope from the local lisp directory should take the priority
-(require 'xcscope)
+(require 'xcscope nil t)
 
 ; Not needed on linux, needed on os x... looks like some init file is missing?
 ; Also see update-file-autoloads Emacs manual and ;;;###autoload in xcscope.el.
