@@ -107,6 +107,8 @@
 	   (concat "clang++ -std=c++14 -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "c")
 	   (concat "clang -std=c11 -g " file " -o " base " && " base))
+	  ((string= (file-name-extension file) "py")
+	   (concat "python3 " file))
 	  (t "echo '¯\_(ツ)_/¯'"))))
 (global-set-key (kbd "C-;") (lambda () (interactive) (compile (vk-get-quick-build-string))))
 
@@ -469,6 +471,6 @@
 (global-set-key [C-mouse-4] 'vk-zoom-in)
 (global-set-key [C-mouse-5] 'vk-zoom-out)
 (global-set-key [?\C-+] 'vk-zoom-in)
-(global-set-key [?\C--] 'vk-zoom-out)
+(global-set-key [?\C-_] 'vk-zoom-out)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
