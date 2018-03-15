@@ -109,6 +109,8 @@
 	   (concat "clang -std=c11 -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "py")
 	   (concat "python3 " file))
+	  ((string= (file-name-extension file) "js")
+	   (concat "node " file))
 	  (t "echo '¯\_(ツ)_/¯'"))))
 (global-set-key (kbd "C-;") (lambda () (interactive) (compile (vk-get-quick-build-string))))
 
@@ -219,32 +221,32 @@
 		       (unless (vk-is-path-blacklisted file-path blacklist)
 			 (if (file-accessible-directory-p file-path)
 			     (unless (or (string= file ".") (string= file "..")) (add-to-list 'dirs file-path))
-			   (if (and (file-readable-p file-path) (string-match "\\.\\(c\\|cpp\\|h\\|hpp\\|vala\\|def\\)$" file-path))
+			   (if (and (file-readable-p file-path) (string-match "\\.\\(c\\|cpp\\|vala\\|def\\)$" file-path))
 			       (add-to-list 'files file-path))))))))
 	       ;; Append some commonly used header files. Uncomment the "/usr/include" line above
 	       ;; and remove/comment this one if you want to see them all their multitude instead
 	       ;; of this selectivity.
-	       (dolist (header '("stdio.h" "stdlib.h" "stdarg.h" "ctype.h" "string.h" "math.h" "dlfcn.h"
-				 "sys/types.h" "sys/time.h" "unistd.h" "assert.h" "limits.h" "poll.h"
-				 "libgen.h" "signal.h" "fcntl.h"
-				 "bits/stdio2.h" "bits/string2.h"
-				 "secure/_string.h" "secure/_stdio.h" "secure/_common.h" ; Clang's "real" headers
-				 "X11/Xos.h" "X11/Xlib.h" "X11/Xfuncproto.h" "X11/Xatom.h" "X11/Xproto.h"
-				 "X11/extensions/Xrandr.h" "X11/extensions/shape.h" "X11/cursorfont.h"
-				 "X11/extensions/XInput2.h" "X11/X.h"
-				 "boost/bind.hpp" "boost/foreach.hpp"
-				 "sys/wait.h" "sys/types.h" "sys/stat.h"
-				 "glib-2.0/glib/gspawn.h" "glib-2.0/glib/gslice.h" "glib-2.0/glib/gmacros.h"
-				 "glib-2.0/gobject/gobject.h" "glib-2.0/gobject/gtype.h"
-				 ))
-		 (let ((header_path (concat "/usr/include/" header)))
-		   (if (file-exists-p header_path) (add-to-list 'files header_path)))
-		 )
+	       ;; (dolist (header '("stdio.h" "stdlib.h" "stdarg.h" "ctype.h" "string.h" "math.h" "dlfcn.h"
+	       ;; 			 "sys/types.h" "sys/time.h" "unistd.h" "assert.h" "limits.h" "poll.h"
+	       ;; 			 "libgen.h" "signal.h" "fcntl.h"
+	       ;; 			 "bits/stdio2.h" "bits/string2.h"
+	       ;; 			 "secure/_string.h" "secure/_stdio.h" "secure/_common.h" ; Clang's "real" headers
+	       ;; 			 "X11/Xos.h" "X11/Xlib.h" "X11/Xfuncproto.h" "X11/Xatom.h" "X11/Xproto.h"
+	       ;; 			 "X11/extensions/Xrandr.h" "X11/extensions/shape.h" "X11/cursorfont.h"
+	       ;; 			 "X11/extensions/XInput2.h" "X11/X.h"
+	       ;; 			 "boost/bind.hpp" "boost/foreach.hpp"
+	       ;; 			 "sys/wait.h" "sys/types.h" "sys/stat.h"
+	       ;; 			 "glib-2.0/glib/gspawn.h" "glib-2.0/glib/gslice.h" "glib-2.0/glib/gmacros.h"
+	       ;; 			 "glib-2.0/gobject/gobject.h" "glib-2.0/gobject/gtype.h"
+	       ;; 			 ))
+	       ;; 	 (let ((header_path (concat "/usr/include/" header)))
+	       ;; 	   (if (file-exists-p header_path) (add-to-list 'files header_path)))
+	       ;; 	 )
 
 	       ;; Add SDL libraries.
 	       ;; OSX-only, I need to make it system and path independent...
-	       (and (string= system-type "darwin")
-		   (setcdr (last files) (let ((sdl-dir "/usr/local/Cellar/sdl2/2.0.5/include/SDL2/")) (mapcar (lambda (s) (concat sdl-dir s)) (directory-files sdl-dir)))))
+	       ;; (and (string= system-type "darwin")
+	       ;; 	   (setcdr (last files) (let ((sdl-dir "/usr/local/Cellar/sdl2/2.0.5/include/SDL2/")) (mapcar (lambda (s) (concat sdl-dir s)) (directory-files sdl-dir)))))
 
 	       files))
 
@@ -253,7 +255,7 @@
 
 	   (message "Processing...")
 	   (cscope-set-initial-directory project-root)
-	   (with-temp-buffer (shell-command (concat "cd " project-root "; cscope -b; ctags -eL " cscope-index-file) t)) ; with-temp-buffer is needed to hide output
+	   (with-temp-buffer (shell-command (concat "cd " project-root "; cscope -b; ctags -Re .") t)) ; with-temp-buffer is needed to hide output
 	   (setq tags-file-name (concat project-root "/TAGS"))
 	   (message "Done processing")
 	   ;; Set compilation-directory also, so the compile function would pick up the root as well.
@@ -382,7 +384,7 @@
  '(custom-enabled-themes (quote (whiteboard)))
  '(frame-background-mode (quote light))
  '(inhibit-startup-screen t)
- '(package-selected-packages (quote (helm)))
+ '(package-selected-packages (quote (latex-preview-pane jedi ## helm)))
  '(safe-local-variable-values (quote ((eval c-set-offset (quote innamespace) 0)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -455,7 +457,8 @@
 ;; Dictionary-based completion.
 ;; Originally bound to M-<TAB> and unreachable in GUI for obvious reasons.
 ;; I don't think it's *that* useful, but I wanna try and see.
-(global-set-key [C-tab] 'ispell-complete-word)
+;; (global-set-key [C-tab] 'ispell-complete-word)
+;; Nope not helpful
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Zoom functions that resize *all* frames;
@@ -472,5 +475,32 @@
 (global-set-key [C-mouse-5] 'vk-zoom-out)
 (global-set-key [?\C-+] 'vk-zoom-in)
 (global-set-key [?\C-_] 'vk-zoom-out)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; REPOS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Standard package.el + MELPA setup
+;; (See also: https://github.com/milkypostman/melpa#usage)
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python shenanigans
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq python-shell-completion-native-disabled-interpreters '("python"))
+
+;; Standard Jedi.el setting
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
+;; (setq jedi:environment-virtualenv
+;;       (list "virtualenv3" "--system-site-packages"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Additional packages to install (TODO automate)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Real-time latex preview mode:
+;; https://www.emacswiki.org/emacs/LaTeXPreviewPane
 
