@@ -11,7 +11,7 @@
 (package-initialize)
 
 (setq local-lisp-path "~/.emacs.d/lisp")
-(setq load-path (cons local-lisp-path load-path))
+(add-to-list 'load-path local-lisp-path)
 
 ;; Scroll by 1 line at a time
 (setq scroll-step 1)
@@ -104,7 +104,7 @@
   (let* ((file (shell-quote-argument (buffer-file-name)))
 	 (base (shell-quote-argument (file-name-sans-extension (buffer-file-name)))))
     (cond ((string= (file-name-extension file) "cpp")
-	   (concat "clang++ -std=c++14 -g " file " -o " base " && " base))
+	   (concat "clang++ -std=c++14 -Wall -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "c")
 	   (concat "clang -std=c11 -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "py")
@@ -384,7 +384,7 @@
  '(custom-enabled-themes (quote (whiteboard)))
  '(frame-background-mode (quote light))
  '(inhibit-startup-screen t)
- '(package-selected-packages (quote (latex-preview-pane jedi ## helm)))
+ '(package-selected-packages (quote (company latex-preview-pane jedi ## helm)))
  '(safe-local-variable-values (quote ((eval c-set-offset (quote innamespace) 0)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -435,8 +435,8 @@
 ;; (setq which-function-mode t)
 
 ;; *CAREFULLY* trying out CEDET with the tip of a toe
-(semantic-mode 1)
-(global-semantic-stickyfunc-mode 1)
+;; (semantic-mode 1)
+;; (global-semantic-stickyfunc-mode 1)
 ;; (global-ede-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -504,3 +504,27 @@
 ;; Real-time latex preview mode:
 ;; https://www.emacswiki.org/emacs/LaTeXPreviewPane
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Rtags & Company
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Company installation instructions: https://company-mode.github.io
+;; Rtags installation instructions: https://github.com/Andersbakken/rtags
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'company)
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/rtags")
+(require 'rtags)
+;; Use company-mode in all buffers
+(add-hook 'after-init-hook 'global-company-mode)
+;; Don't insert function arguments as a template after completion.
+;; (this throws me off a lot and is never what I want)
+(custom-set-variables '(company-rtags-insert-arguments nil))
+;; Add the Rtags backend to Company.
+(push 'company-rtags company-backends)
+;; Purportedly needed to run company, though it seems more annoying than useful.
+(setq rtags-autostart-diagnostics t)
+;; Enable completions in RTags. Needed for Company interop.
+(setq rtags-completions-enabled t)
+;; Force complete. By default it auto-activates once you type . -> etc.
+(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;; Flyspell is recommended but I'll keep it disabled for now.
+;; (require 'flycheck-rtags)
