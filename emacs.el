@@ -104,7 +104,7 @@
   (let* ((file (shell-quote-argument (buffer-file-name)))
 	 (base (shell-quote-argument (file-name-sans-extension (buffer-file-name)))))
     (cond ((string= (file-name-extension file) "cpp")
-	   (concat "clang++ -std=c++14 -Wall -g " file " -o " base " && " base))
+	   (concat "clang++ -std=c++14 -lpthread -Wall -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "c")
 	   (concat "clang -std=c11 -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "py")
@@ -528,3 +528,4 @@
 (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
 ;; Flyspell is recommended but I'll keep it disabled for now.
 ;; (require 'flycheck-rtags)
+(rtags-enable-standard-keybindings)
