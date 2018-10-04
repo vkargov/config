@@ -106,7 +106,7 @@
     (cond ((string= (file-name-extension file) "cpp")
 	   (concat "clang++ -std=c++14 -lpthread -Wall -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "c")
-	   (concat "clang -std=c11 -g " file " -o " base " && " base))
+	   (concat "clang -std=c11 -lpthread -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "py")
 	   (concat "python3 " file))
 	  ((string= (file-name-extension file) "js")
