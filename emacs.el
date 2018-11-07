@@ -111,6 +111,8 @@
 	   (concat "python3 " file))
 	  ((string= (file-name-extension file) "js")
 	   (concat "node " file))
+	  ((string= (file-name-extension file) "swift")
+	   (concat "swift " file))
 	  (t "echo '¯\_(ツ)_/¯'"))))
 (global-set-key (kbd "C-;") (lambda () (interactive) (compile (vk-get-quick-build-string))))
 
@@ -381,11 +383,52 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-rtags-insert-arguments nil)
  '(custom-enabled-themes (quote (whiteboard)))
  '(frame-background-mode (quote light))
  '(inhibit-startup-screen t)
- '(package-selected-packages (quote (company latex-preview-pane jedi ## helm)))
- '(safe-local-variable-values (quote ((eval c-set-offset (quote innamespace) 0)))))
+ '(package-selected-packages
+   (quote
+    (swift-mode company latex-preview-pane jedi ## helm)))
+ '(safe-local-variable-values
+   (quote
+    ((eval add-hook
+	   (quote prog-mode-hook)
+	   (lambda nil
+	     (whitespace-mode 1))
+	   (not :APPEND)
+	   :BUFFER-LOCAL)
+     (eval let*
+	   ((x
+	     (dir-locals-find-file default-directory))
+	    (this-directory
+	     (if
+		 (listp x)
+		 (car x)
+	       (file-name-directory x))))
+	   (unless
+	       (or
+		(featurep
+		 (quote swift-project-settings))
+		(and
+		 (fboundp
+		  (quote tramp-tramp-file-p))
+		 (tramp-tramp-file-p this-directory)))
+	     (add-to-list
+	      (quote load-path)
+	      (concat this-directory "utils")
+	      :append)
+	     (let
+		 ((swift-project-directory this-directory))
+	       (require
+		(quote swift-project-settings))))
+	   (set
+	    (make-local-variable
+	     (quote swift-project-directory))
+	    this-directory))
+     (eval c-set-offset
+	   (quote innamespace)
+	   0)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -517,7 +560,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 ;; Don't insert function arguments as a template after completion.
 ;; (this throws me off a lot and is never what I want)
-(custom-set-variables '(company-rtags-insert-arguments nil))
+
 ;; Add the Rtags backend to Company.
 (push 'company-rtags company-backends)
 ;; Purportedly needed to run company, though it seems more annoying than useful.
