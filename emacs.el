@@ -385,11 +385,14 @@
  ;; If there is more than one, they won't work right.
  '(company-rtags-insert-arguments nil)
  '(custom-enabled-themes (quote (whiteboard)))
+ '(elpy-modules
+   (quote
+    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
  '(frame-background-mode (quote light))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (swift-mode company latex-preview-pane jedi ## helm)))
+    (elpy swift-mode company latex-preview-pane jedi ## helm)))
  '(safe-local-variable-values
    (quote
     ((eval add-hook
@@ -533,7 +536,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python shenanigans
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq python-shell-completion-native-disabled-interpreters '("python"))
+;; Enable Elpy, the Emacs Lisp Python Environment
+;; https://github.com/jorgenschaefer/elpy
+(elpy-enable)
 
 ;; Standard Jedi.el setting
 ;; (add-hook 'python-mode-hook 'jedi:setup)
