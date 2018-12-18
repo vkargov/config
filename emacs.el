@@ -324,12 +324,9 @@
 ;; M-n copies full file name (was undefined)
 (global-set-key (kbd "M-n") (lambda () (interactive) (kill-new (buffer-file-name))))
 
-;; If you launch emacs from Spotlight, it doesn't recognise local...
-;; This seems like a better https://stackoverflow.com/questions/135688/setting-environment-variables-in-os-x
-;; I don't think this line is needed. ==v
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-;;(setq exec-path (append exec-path '("/usr")))
-
+;; If you launch Emacs from Spotlight/Gnome, it won't "see" changes
+;; in the PATH variable that I make in bashrc.
+(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/usr/bin")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Highlight shenenigans 
