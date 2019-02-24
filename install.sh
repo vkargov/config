@@ -22,6 +22,7 @@ install_conf bash.conf ~/.bash_profile
 install_conf tmux.conf ~/.tmux.conf
 install_conf inputrc ~/.inputrc
 install_conf .xbindkeysrc ~/.xbindkeysrc
+install_conf gdbinit ~/.gdbinit
 
 if [[ "$(uname -s)" == Darwin ]]; then
     install_conf karabiner.conf "$HOME/Library/Application Support/Karabiner/private.xml"
