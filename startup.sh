@@ -13,3 +13,6 @@ n bash -c 'i=0; while true; do date; if [[ $i -eq 0 ]]; then notify-send "$(cat 
 
 # Don't flip the screen after plugging in a PS3 controller. (Now I've seen everything.)
 gsettings set org.gnome.settings-daemon.peripherals.touchscreen orientation-lock true
+
+# Launch Gromit MPX and set up shortcuts for it
+n gromit-mpx -u F10 # Undo doesn't work, maybe this will fix it?

@@ -104,7 +104,7 @@
   (let* ((file (shell-quote-argument (buffer-file-name)))
 	 (base (shell-quote-argument (file-name-sans-extension (buffer-file-name)))))
     (cond ((string= (file-name-extension file) "cpp")
-	   (concat "clang++ -std=c++14 -lpthread -Wall -g " file " -o " base " && " base))
+	   (concat "clang++ -std=c++17 -lpthread -Wall -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "c")
 	   (concat "clang -std=c11 -lpthread -g " file " -o " base " && " base))
 	  ((string= (file-name-extension file) "py")
@@ -390,6 +390,8 @@
  '(package-selected-packages
    (quote
     (elpy swift-mode company latex-preview-pane jedi ## helm)))
+ '(preview-orientation (quote left))
+ '(python-shell-interpreter "python3")
  '(safe-local-variable-values
    (quote
     ((eval add-hook
@@ -536,6 +538,7 @@
 ;; Enable Elpy, the Emacs Lisp Python Environment
 ;; https://github.com/jorgenschaefer/elpy
 (elpy-enable)
+(setq elpy-rpc-python-command "python3")
 
 ;; Standard Jedi.el setting
 ;; (add-hook 'python-mode-hook 'jedi:setup)
@@ -574,3 +577,8 @@
 ;; Flyspell is recommended but I'll keep it disabled for now.
 ;; (require 'flycheck-rtags)
 (rtags-enable-standard-keybindings)
+
+;; Launch rdm upon entering C/C++ mode if it hasn't been launched.
+(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+(add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
