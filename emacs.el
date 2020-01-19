@@ -391,7 +391,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (cuda-mode company-tern js2-mode elpy swift-mode company latex-preview-pane jedi ## helm)))
+    (modern-cpp-font-lock cuda-mode company-tern js2-mode elpy swift-mode company latex-preview-pane jedi ## helm)))
  '(preview-orientation (quote left))
  '(python-shell-interpreter "python3")
  '(safe-local-variable-values
@@ -633,3 +633,6 @@
 ;; }
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Default C++ mode doesn't fully support C++11 and higher, have to use a third-party package for that.
+(modern-c++-font-lock-global-mode t)
