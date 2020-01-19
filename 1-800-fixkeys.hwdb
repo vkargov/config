@@ -8,12 +8,20 @@
 # Then run `systemd-hwdb update` and reboot.
 # And don't ask any questions.
 
+# Generic laptop keyboards
 evdev:atkbd:dmi:*           # This supposedly works with most USB keyboards.
  KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
  KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
  KEYBOARD_KEY_1c=rightctrl  # enter := rightctrl
  KEYBOARD_KEY_9d=enter      # rightctrl := enter
 
-# References:
-# https://wiki.archlinux.org/index.php/Map_scancodes_to_keycodes
-# https://github.com/systemd/systemd/blob/master/hwdb/60-keyboard.hwdb
+# Apple magic keyboard. For some reason this doesn't work.
+# Have to resort to xmodmap for now.
+# Perhaps related:
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=788498
+# https://help.ubuntu.com/community/AppleKeyboard
+# + install https://github.com/free5lot/hid-apple-patched
+evdev:input:b0003v05ACp0267*
+ KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
+ KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
+
