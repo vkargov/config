@@ -667,3 +667,6 @@
 
 ;; Hotkeys on russian layout
 (reverse-input-method 'russian-computer)
+
+;; Disable bell
+(setq ring-bell-function 'ignore)

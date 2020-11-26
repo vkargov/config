@@ -19,4 +19,4 @@ fi
 gsettings set org.gnome.settings-daemon.peripherals.touchscreen orientation-lock true
 
 # Launch Gromit MPX and set up shortcuts for it
-n gromit-mpx -u F10 # Undo doesn't work, maybe this will fix it?
+# n gromit-mpx -u F10 # Undo doesn't work, maybe this will fix it?

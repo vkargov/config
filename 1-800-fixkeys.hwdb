@@ -22,6 +22,7 @@ evdev:atkbd:dmi:*           # This supposedly works with most USB keyboards.
 # https://help.ubuntu.com/community/AppleKeyboard
 # + install https://github.com/free5lot/hid-apple-patched
 evdev:input:b0003v05ACp0267*
- KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
- KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
+# KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
+#
+KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
 

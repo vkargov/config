@@ -5,23 +5,23 @@
 
 #Japanese 
 # The new ibus version does not switch from Cyrillic to Japanese for some reason, so we have to switch to English first.
-"ibus engine xkb:us::eng; ibus engine mozc-jp; xmodmap ~/.xmodmap"
+"ibus engine xkb:usb::eng ; ibus engine mozc-jp"
 m:0x40 + c:44
 
 #English
-"ibus engine xkb:us::eng; xmodmap ~/.xmodmap"
+"ibus engine xkb:us::eng"
 m:0x40 + c:45
 
 #Russian
-"ibus engine xkb:ru::rus; xmodmap ~/.xmodmap"
+"ibus engine xkb:ru::rus"
 m:0x40 + c:46
 
 #Ukrainian
-"ibus engine xkb:ua::ukr; xmodmap ~/.xmodmap"
+"ibus engine xkb:ua::ukr"
 m:0x40 + c:32
 
 #French
-"ibus engine xkb:fr::fra; xmodmap ~/.xmodmap"
+"ibus engine xkb:fr::fra"
 m:0x40 + c:47
 
 # PrintScr issues a mouse click without losing the window focus.

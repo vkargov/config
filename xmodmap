@@ -26,6 +26,10 @@ keycode 0x24 = Control_R
 keycode 0x69 = Return
 add Control = Control_R
 
+! Right alt/option = enter on Apple keyboards
+! Not sure how it would work on other keyboards
+keycode 0x86 = Return
+
 ! Swap Alt and Super, reassign the Mod1 and Mod4 groups associated with them
 !(some apps follor the key names, some group names...)
 !keycode 64 = Super_L
