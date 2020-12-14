@@ -670,3 +670,14 @@
 
 ;; Disable bell
 (setq ring-bell-function 'ignore)
+
+;; Navigate in/out rtags
+(defun my-rtags-shortcuts ()
+  (local-set-key [mouse-9] 'rtags-location-stack-back)
+  (local-set-key (kbd "<M-left>") 'rtags-location-stack-back)
+  (local-set-key [mouse-8] 'rtags-find-symbol-at-point)
+  (local-set-key (kbd "<M-right>") 'rtags-find-symbol-at-point)
+)
+
+(add-hook 'c-mode-hook 'my-rtags-shortcuts)
+(add-hook 'c++-mode-hook 'my-rtags-shortcuts)
