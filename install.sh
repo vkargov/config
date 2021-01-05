@@ -18,7 +18,7 @@ install_conf () {
 }
 
 install_conf emacs.el ~/.emacs
-install_conf bash.conf ~/.bash_profile
+install_conf bash.conf ~/.bashrc
 install_conf tmux.conf ~/.tmux.conf
 install_conf inputrc ~/.inputrc
 install_conf .xbindkeysrc ~/.xbindkeysrc
