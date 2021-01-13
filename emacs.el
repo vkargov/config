@@ -116,6 +116,7 @@
 	  ((string= (file-name-extension file) "swift")
 	   (concat "swift " file))
 	  (t "echo '¯\_(ツ)_/¯'"))))
+
 (global-set-key (kbd "C-;") (lambda () (interactive) (compile (vk-get-quick-build-string))))
 
 ;; Don't ask if I want to reload TAGS
@@ -383,6 +384,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-rtags-insert-arguments nil)
+ '(compilation-window-height 10)
  '(custom-enabled-themes (quote (whiteboard)))
  '(elpy-modules
    (quote
@@ -391,7 +393,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (modern-cpp-font-lock cuda-mode company-tern js2-mode elpy swift-mode company latex-preview-pane jedi ## helm)))
+    (modern-cpp-font-lock cuda-mode js2-mode elpy swift-mode company latex-preview-pane jedi ## helm)))
  '(preview-orientation (quote left))
  '(python-shell-interpreter "python3")
  '(safe-local-variable-values
@@ -531,7 +533,7 @@
 ;; (See also: https://github.com/milkypostman/melpa#usage)
 (require 'package)
 (add-to-list 'package-archives
-	      '("melpa" . "http://melpa.milkbox.net/packages/") t)
+	      '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -590,7 +592,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
 ;; https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
-;; https://ternjs.net/doc/manual.html
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -599,38 +600,12 @@
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
 (require 'company)
-(require 'company-tern)
 
-(add-to-list 'company-backends 'company-tern)
 (add-hook 'js2-mode-hook (lambda ()
-                           (tern-mode)
                            (company-mode)))
                            
 ;; Disable completion keybindings, as we use xref-js2 instead
-;; (define-key tern-mode-keymap (kbd "M-.") nil)
-;; (define-key tern-mode-keymap (kbd "M-,") nil)
 ;; VK: I've commented these lines as I haven't adopted xref-js2 just yet.
-
-;; Tern's autocomplete requires a config file named .tern-project to be
-;; placed into the project's directly. This seems to work:
-;; {
-;;   "libs": [
-;;     "jquery",
-;;     "browser"
-;;   ],
-;;   "loadEagerly": [
-;;     "./**/*.js"
-;;   ],
-;;   "dontLoad": [
-;;     "./bower_components/"
-;;   ],
-;;   "plugins": {
-;;     "requirejs": {
-;;       "baseURL": "./",
-;;       "paths": {}
-;;     }
-;;   }
-;; }
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
