@@ -1,19 +1,35 @@
 # Rebind the keyboard.
-# Alternatively, setkeycodes may be used to achieve the same effect.
 
-# To get keycodes, use `evtest`
-# (`showkey` doesn't work correct with USB keyboards)
+# To get scankeycodes, use `evtest`
+# The keycode you want is the one in the EV_MSC line
 
-# Copy this file to /etc/udev/hwdb.d/1-800-fixkeys.hwdb
-# Then run `systemd-hwdb update` and reboot.
-# And don't ask any questions.
+# Once you're done adding the new lines, do the following:
+# 1) Copy this file to /etc/udev/hwdb.d/1-800-fixkeys.hwdb
+# 2) Run `systemd-hwdb update`
+# 3) Run `udevadm trigger /dev/input/event<code>` or reboot to re-register the keyboard.
+
+# To double check the codes have been applied, you can do:
+# $ systemd-hwdb query 'evdev:input:b*v045Ep07F8*'
+
+# References:
+# https://www.altlinux.org/Переназначение_клавиш_клавиатуры
+# https://yulistic.gitlab.io/2017/12/linux-keymapping-with-udev-hwdb/
 
 # Generic laptop keyboards
+# TODO double check if the extended codes below don't work, they might
 evdev:atkbd:dmi:*           # This supposedly works with most USB keyboards.
  KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
  KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
  KEYBOARD_KEY_1c=rightctrl  # enter := rightctrl
  KEYBOARD_KEY_9d=enter      # rightctrl := enter
+
+# Microsoft USB keyboard
+# (and probably others if if you add their 
+evdev:input:b*v045Ep07F8*
+ KEYBOARD_KEY_70039=leftctrl   # capslock := leftctrl
+ KEYBOARD_KEY_700e0=capslock   # leftctrl := capslock
+ KEYBOARD_KEY_70028=rightctrl  # enter := rightctrl
+ KEYBOARD_KEY_700e4=enter      # rightctrl := enter
 
 # Apple magic keyboard. For some reason this doesn't work.
 # Have to resort to xmodmap for now.
@@ -21,8 +37,8 @@ evdev:atkbd:dmi:*           # This supposedly works with most USB keyboards.
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=788498
 # https://help.ubuntu.com/community/AppleKeyboard
 # + install https://github.com/free5lot/hid-apple-patched
-evdev:input:b0003v05ACp0267*
-# KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
-#
-KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
+
+# evdev:input:b0003v05ACp0267*
+#  KEYBOARD_KEY_3a=leftctrl   # capslock := leftctrl
+#  KEYBOARD_KEY_1d=capslock   # leftctrl := capslock
 
