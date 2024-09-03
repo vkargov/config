@@ -1,0 +1,37 @@
+#!/bin/bash
+
+zram () 
+{ 
+    dev=/dev/zram0;
+    case "$1" in 
+        on | enable)
+            if [[ -e /dev/zram0 ]]; then
+                echo zram device is already present, should already be on?;
+                zramctl;
+                return 0;
+            fi;
+            modprobe zram
+	    sleep 1
+	    zramctl -a zstd $dev -s 64G
+	    mkswap $dev
+	    swapon -p 5 $dev
+
+	    if grep -q /dev/dm-2 /proc/swaps; then
+	        swapoff /dev/dm-2
+	    fi
+        ;;
+        off | disable)
+            swapoff $dev; rmmod zram
+        ;;
+        '' | list)
+            zramctl;
+            echo;
+            echo Use \'on\' or \'off\' to enable or disable
+        ;;
+        *)
+            echo 'zram on|off'
+        ;;
+    esac
+}
+
+zram $1

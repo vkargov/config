@@ -1,0 +1,11 @@
+[Unit]
+Description=Zram script launcher
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/zram on
+ExecStop=/usr/local/sbin/zram off
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

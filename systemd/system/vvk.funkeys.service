@@ -1,0 +1,8 @@
+[Unit]
+Description=Funkeys for Initial D :0
+
+[Service]
+ExecStart=/usr/local/sbin/funkeys /dev/input/by-id/usb-0461_USB_Keyboard-event-kbd
+
+[Install]
+WantedBy=multi-user.target
