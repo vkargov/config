@@ -5,4 +5,4 @@ Description=Funkeys for Initial D :0
 ExecStart=/usr/local/sbin/funkeys /dev/input/by-id/usb-0461_USB_Keyboard-event-kbd
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target suspend.target
